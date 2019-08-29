@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { Container, ListGroup, ListGroupItem, Button, Card, CardTitle, CardSubtitle, CardBody, CardImg, CardHeader } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Button, Card, CardTitle, CardSubtitle, CardBody, CardImg, CardHeader, Jumbotron, JumbotronProps } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { getPlayers, deletePlayer } from '../actions/playerActions';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'; 
+// import { Link } from 'react-router-dom'; 
 
 
 class Roster extends Component {
-
+    getID(){
+        const collapse = "#" + this.props.player.id;
+        return collapse
+    }
+    
     componentDidMount() {
         this.props.getPlayers();
     }
@@ -25,34 +29,46 @@ class Roster extends Component {
                         <TransitionGroup className="roster">
                             { players.map(({ _id, firstName, lastName, age, height, weight, college, jerseyNumber, primaryPosition, team, img, apiId, draftRound, draftPick, injury, draftYear }) => (
                                 <CSSTransition key={_id} timeout = {500} classNames =  "fade">
-                                    <ListGroupItem>
-                                        <Card className="text-center" style={{width: '20rem'}}>
-                                            <CardHeader className="titlebar"><h3 className="PlayerName">{lastName}, {firstName[0]}</h3><h3 className="ml-4 playerpos">{primaryPosition}</h3>
+                                    <ListGroupItem className="accordion">
+                                        <Card className="text-center" data-toggle="collapse" data-target={this.getID()} >
+                                            <CardHeader className="titlebar text-center"><h3 className="PlayerName float-left">{lastName}, {firstName[0]}</h3><h3 className="playerpos">{primaryPosition}</h3>
                                             <Button 
                                             className="remove-btn remove" 
                                             color="danger" 
                                             size="sm" 
                                             onClick={this.onDeleteClick.bind(this, _id)}>&times;</Button>
                                             </CardHeader>
-                                            <CardImg src={img} alt=""/>
-                                            <CardBody>
-                                                <CardSubtitle>{ team }</CardSubtitle>
-                                                Age: { age } <br/>
-                                                Height: { height } <br/>
-                                                Weight: { weight } <br/>
-                                                College: { college } <br/>
-                                                Jersey Number: { jerseyNumber } <br/>
-                                                Draft Year: { draftYear } <br/>
-                                                Round Drafted: { draftRound } <br/>
-                                                Pick Selected: { draftPick } <br/>
-                                                Injury Status: { injury } <br/>
+                                            <CardBody id={this._id} className="collapsed">
+                                                <div className="row">
+                                                    <img className="playerImg" src={img} alt=""/>
+                                                    <div className="col-9 playerInfo">
+                                                        <div id="playerStats" className="row col-12 text-left">
+                                                            <h4>{ team }
+                                                            <span className="float-right"># { jerseyNumber }</span></h4>
+                                                        </div>
+                                                            <div className="col-5 p_info p_info_l">
+                                                            Age: { age } <br/>
+                                                            Height: { height } <br/>
+                                                            Weight: { weight } <br/>
+                                                            College: { college } <br/>
+                                                            </div>
+                                                            <div className="col-5 p_info">
+                                                            Draft Year: { draftYear } <br/>
+                                                            Round Drafted: { draftRound } <br/>
+                                                            Pick Selected: { draftPick } <br/>
+                                                            Status: { injury } <br/>
+                                                            </div>
+                                                    </div>
+                                                </div>
                                             </CardBody>
+
                                         </Card>
                                     </ListGroupItem>
                                 </CSSTransition>
                             ))}
                         </TransitionGroup>
                     </ListGroup>
+                    <Jumbotron props={this.selectedid}/>
             </Container>
         );
     }

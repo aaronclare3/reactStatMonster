@@ -63,9 +63,9 @@ class PlayerModal extends Component {
             var team = res.data.players[0].teamAsOfDate.abbreviation;
             var img = res.data.players[0].player.officialImageSrc;
             if(res.data.players[0].player.drafted === null){
-                var draftRound = "Undrafted"
-                var draftYear = "Undrafted"
-                var draftPick = "Undrafted"
+                var draftRound = 0
+                var draftYear = 0
+                var draftPick = 0
             }else{
                 var draftRound = res.data.players[0].player.drafted.round;
                 var draftYear = res.data.players[0].player.drafted.year;
@@ -74,7 +74,7 @@ class PlayerModal extends Component {
             if(res.data.players[0].player.currentInjury === null){
                 var injury = "HEALTHY"
             }else{
-                var injury = res.data.players[0].player.currentInjury.description;
+                var injury = res.data.players[0].player.currentInjury.playingProbability;
             }
             const newPlayer = {
                 firstName:firstName,
@@ -113,7 +113,7 @@ class PlayerModal extends Component {
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>
                                 <Label for="player">Player</Label>
-                                <Input type="text" name="firstname" id="player" placeholder="Player First Name" onChange={this.onChange}></Input>
+                                <Input type="text" className="mb-3" name="firstname" id="player" placeholder="Player First Name" onChange={this.onChange}></Input>
                                 <Input type="text" name="lastname" id="player" placeholder="Player Last Name" onChange={this.onChange}></Input>
                                 <Button color="dark" style={{marginTop: '2rem'}} block>Add Player</Button>
                             </FormGroup>

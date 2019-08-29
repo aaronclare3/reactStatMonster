@@ -25,6 +25,29 @@
 .PlayerName {
     display:inline-block;
 }
+.playerImg, .playerInfo{
+    display:inline-block;
+}
+#playerStats{
+    vertical-align: top;
+    border-bottom: 1px lightgrey solid;
+}
+.playerInfo div{
+    display: inline-block;
+}
+.p_info{
+    margin-top: 10px;
+}
+.p_info_l{
+    border-right: 1px lightgrey solid;
+}
+.playerImg{
+    display:inline-block;
+    max-width: 150px;
+    max-height: 150px;
+    height: auto;
+    width: auto;
+}
 .playerpos{
     display: inline-block;
 }

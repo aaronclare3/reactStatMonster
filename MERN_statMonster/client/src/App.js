@@ -16,8 +16,8 @@ function App() {
       <div className="App">
         <AppNavbar></AppNavbar>
         <Container>
-          <PlayerModal></PlayerModal>
-          <Roster></Roster>
+          <PlayerModal/>
+          <Roster className="col-3"/>
         </Container>
       </div>
     </Provider>
