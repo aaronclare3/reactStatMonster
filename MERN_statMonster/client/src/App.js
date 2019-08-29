@@ -9,6 +9,7 @@ import store from './store';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import PlayerJumbo from './components/PlayerJumbo';
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
         <AppNavbar></AppNavbar>
         <Container>
           <PlayerModal/>
-          <Roster className="col-3"/>
+          <Roster className="roster"/>
+          {/* <PlayerJumbo className="col-7 playerJumbo"/> */}
         </Container>
       </div>
     </Provider>

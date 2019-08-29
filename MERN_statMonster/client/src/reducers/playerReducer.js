@@ -1,5 +1,5 @@
 import uuid from 'uuid';
-import { GET_PLAYERS, ADD_PLAYER, DELETE_PLAYER, PLAYERS_LOADING } from '../actions/types';
+import { GET_PLAYERS, ADD_PLAYER, DELETE_PLAYER, PLAYERS_LOADING, GET_PLAYER } from '../actions/types';
 
 const initialState = {
     players: [],
@@ -29,6 +29,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: true
+            };
+        case GET_PLAYER:
+            return {
+                ...state,
+                players: action.payload,
+                loading: false
             };
         default:
             return state;

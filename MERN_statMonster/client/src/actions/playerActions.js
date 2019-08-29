@@ -1,5 +1,6 @@
-import { GET_PLAYERS, ADD_PLAYER, DELETE_PLAYER, PLAYERS_LOADING } from './types';
+import { GET_PLAYERS, ADD_PLAYER, DELETE_PLAYER, PLAYERS_LOADING, GET_PLAYER } from './types';
 import axios from 'axios';
+
 
 export const getPlayers = () => dispatch => {
     dispatch(setPlayersLoading());
@@ -30,6 +31,17 @@ export const deletePlayer = (id) => dispatch => {
             dispatch({
                 type: DELETE_PLAYER,
                 payload: id
+        })
+    )
+}
+
+export const getPlayer = (id) => dispatch => {
+    dispatch(setPlayersLoading());
+    axios.get(`/api/players/${id}`)
+        .then(res => 
+            dispatch({
+                type: GET_PLAYER,
+                payload: res.data
         })
     )
 }
