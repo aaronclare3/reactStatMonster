@@ -62,28 +62,20 @@ class PlayerModal extends Component {
             var apiId = res.data.players[0].player.id;
             var team = res.data.players[0].teamAsOfDate.abbreviation;
             var img = res.data.players[0].player.officialImageSrc;
-            var draftRound = res.data.players[0].player.drafted.round;
-            var draftYear = res.data.players[0].player.drafted.year;
-            var draftPick = res.data.players[0].player.drafted.roundPick;
+            if(res.data.players[0].player.drafted === null){
+                var draftRound = "Undrafted"
+                var draftYear = "Undrafted"
+                var draftPick = "Undrafted"
+            }else{
+                var draftRound = res.data.players[0].player.drafted.round;
+                var draftYear = res.data.players[0].player.drafted.year;
+                var draftPick = res.data.players[0].player.drafted.roundPick;
+            }
             if(res.data.players[0].player.currentInjury === null){
                 var injury = "HEALTHY"
             }else{
                 var injury = res.data.players[0].player.currentInjury;
             }
-            console.log(firstName);
-            console.log(lastName);
-            console.log(age);
-            console.log(primaryPosition);
-            console.log(jerseyNumber);
-            console.log(college);
-            console.log(weight);
-            console.log(height);
-            console.log(apiId);
-            console.log(team);
-            console.log(img);
-            console.log(draftRound);
-            console.log(draftPick);
-            console.log(injury);
             const newPlayer = {
                 firstName:firstName,
                 lastName:lastName,
