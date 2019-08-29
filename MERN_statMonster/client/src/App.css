@@ -19,3 +19,12 @@
     opacity: 0.01;
     transition: opacity 1000ms ease-in;
 }
+.titlebar{
+    text-align: left;
+}
+.PlayerName {
+    display:inline-block;
+}
+.remove{
+    float: right;
+}
