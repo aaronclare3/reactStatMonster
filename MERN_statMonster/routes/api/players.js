@@ -6,7 +6,7 @@ const Player = require('../../models/Player');
 
 router.get('/', (req, res) => {
     Player.find()
-        .sort({ date: -1 })
+        .sort({ primaryPosition: -1 })
         .then(players => res.json(players))
         .catch(err => res.json(err));
 });

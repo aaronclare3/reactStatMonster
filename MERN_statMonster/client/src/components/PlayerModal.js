@@ -65,7 +65,11 @@ class PlayerModal extends Component {
             var draftRound = res.data.players[0].player.drafted.round;
             var draftYear = res.data.players[0].player.drafted.year;
             var draftPick = res.data.players[0].player.drafted.roundPick;
-            var injury = res.data.players[0].player.currentInjury;
+            if(res.data.players[0].player.currentInjury === null){
+                var injury = "HEALTHY"
+            }else{
+                var injury = res.data.players[0].player.currentInjury;
+            }
             console.log(firstName);
             console.log(lastName);
             console.log(age);

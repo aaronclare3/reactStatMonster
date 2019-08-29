@@ -46,7 +46,7 @@ class Roster extends Component {
                                                 Draft Year: { draftYear } <br/>
                                                 Round Drafted: { draftRound } <br/>
                                                 Pick Selected: { draftPick } <br/>
-                                                Current Injury: { injury } <br/>
+                                                Injury Status: { injury } <br/>
                                             </CardBody>
                                         </Card>
                                     </ListGroupItem>
