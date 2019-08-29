@@ -25,6 +25,9 @@
 .PlayerName {
     display:inline-block;
 }
+.playerpos{
+    display: inline-block;
+}
 .remove{
     float: right;
 }

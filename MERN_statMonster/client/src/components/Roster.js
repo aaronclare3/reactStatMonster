@@ -26,8 +26,8 @@ class Roster extends Component {
                             { players.map(({ _id, firstName, lastName, age, height, weight, college, jerseyNumber, primaryPosition, team, img, apiId, draftRound, draftPick, injury, draftYear }) => (
                                 <CSSTransition key={_id} timeout = {500} classNames =  "fade">
                                     <ListGroupItem>
-                                        <Card className="text-center" style={{width: '18rem'}}>
-                                            <CardHeader className="titlebar"><h3 className="PlayerName">{firstName} {lastName}</h3>
+                                        <Card className="text-center" style={{width: '20rem'}}>
+                                            <CardHeader className="titlebar"><h3 className="PlayerName">{lastName}, {firstName[0]}</h3><h3 className="ml-4 playerpos">{primaryPosition}</h3>
                                             <Button 
                                             className="remove-btn remove" 
                                             color="danger" 
@@ -36,7 +36,6 @@ class Roster extends Component {
                                             </CardHeader>
                                             <CardImg src={img} alt=""/>
                                             <CardBody>
-                                                <CardTitle style={{fontWeight: 'bold'}}>{ primaryPosition }</CardTitle>
                                                 <CardSubtitle>{ team }</CardSubtitle>
                                                 Age: { age } <br/>
                                                 Height: { height } <br/>

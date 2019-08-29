@@ -74,7 +74,7 @@ class PlayerModal extends Component {
             if(res.data.players[0].player.currentInjury === null){
                 var injury = "HEALTHY"
             }else{
-                var injury = res.data.players[0].player.currentInjury;
+                var injury = res.data.players[0].player.currentInjury.description;
             }
             const newPlayer = {
                 firstName:firstName,
