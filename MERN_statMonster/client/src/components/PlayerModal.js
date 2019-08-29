@@ -16,7 +16,19 @@ import { addPlayer } from '../actions/playerActions';
 class PlayerModal extends Component {
     state = {
         modal: false,
-        name:''
+        firstName:'',
+        lastName:'',
+        age:'',
+        height:'',
+        weight:'',
+        college:'',
+        jerseyNumber:'',
+        primaryPosition:'',
+        team:'',
+        img:'',
+        apiId:'',
+        draftRound:'',
+        draftPick:'',
     }
 
     toggle = () => {
@@ -33,31 +45,62 @@ class PlayerModal extends Component {
         e.preventDefault();
         axios({
             method: 'get',
-            url: `https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?player=${e.target.name.value}`,
+            url: `https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?player=${e.target.firstname.value}-${e.target.lastname.value}`,
             params: {"fordate": "20180909"},
             headers: {"Authorization": "Basic " + btoa("bb751682-fb89-4b9a-a62c-240b68" + ':' + "MYSPORTSFEEDS")}
         })
         .then(res => {
             console.log(res.data)
-            console.log(res.data.players[0].player.firstName)
-            console.log(res.data.players[0].player.lastName)
-            console.log(res.data.players[0].player.age)
-            console.log(res.data.players[0].player.primaryPosition)
-            console.log(res.data.players[0].player.jerseyNumber)
-            console.log(res.data.players[0].player.college)
-            console.log(res.data.players[0].player.weight)
-            console.log(res.data.players[0].player.id)
-            console.log(res.data.players[0].teamAsOfDate.abbreviation)
+            var firstName = res.data.players[0].player.firstName;
+            var lastName = res.data.players[0].player.lastName;
+            var age = res.data.players[0].player.age;
+            var primaryPosition = res.data.players[0].player.primaryPosition;
+            var jerseyNumber = res.data.players[0].player.jerseyNumber;
+            var college = res.data.players[0].player.college;
+            var weight = res.data.players[0].player.weight;
+            var height = res.data.players[0].player.height;
+            var apiId = res.data.players[0].player.id;
+            var team = res.data.players[0].teamAsOfDate.abbreviation;
+            var img = res.data.players[0].player.officialImageSrc;
+            var draftRound = res.data.players[0].player.drafted.round;
+            var draftYear = res.data.players[0].player.drafted.year;
+            var draftPick = res.data.players[0].player.drafted.roundPick;
+            var injury = res.data.players[0].player.currentInjury;
+            console.log(firstName);
+            console.log(lastName);
+            console.log(age);
+            console.log(primaryPosition);
+            console.log(jerseyNumber);
+            console.log(college);
+            console.log(weight);
+            console.log(height);
+            console.log(apiId);
+            console.log(team);
+            console.log(img);
+            console.log(draftRound);
+            console.log(draftPick);
+            console.log(injury);
+            const newPlayer = {
+                firstName:firstName,
+                lastName:lastName,
+                age: age,
+                height: height,
+                weight: weight,
+                college: college,
+                jerseyNumber: jerseyNumber,
+                primaryPosition: primaryPosition,
+                team: team,
+                img: img,
+                apiId: apiId,
+                draftYear: draftYear,
+                draftRound: draftRound,
+                draftPick: draftPick,
+                injury: injury
+            }
+            this.props.addPlayer(newPlayer);
+            this.toggle();
         })
         .catch(err => console.log(err))
-
-
-        const newPlayer = {
-            name: this.state.name
-        }
-        this.props.addPlayer(newPlayer);
-
-        this.toggle();
     }
 
     render() {
@@ -74,7 +117,8 @@ class PlayerModal extends Component {
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>
                                 <Label for="player">Player</Label>
-                                <Input type="text" name="name" id="player" placeholder="Add player" onChange={this.onChange}></Input>
+                                <Input type="text" name="firstname" id="player" placeholder="Player First Name" onChange={this.onChange}></Input>
+                                <Input type="text" name="lastname" id="player" placeholder="Player Last Name" onChange={this.onChange}></Input>
                                 <Button color="dark" style={{marginTop: '2rem'}} block>Add Player</Button>
                             </FormGroup>
                         </Form>
