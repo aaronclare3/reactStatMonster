@@ -19,6 +19,12 @@ class Roster extends Component {
             console.log(this.state.id)
     }
     
+    static propTypes = {
+        getPlayers: PropTypes.func.isRequired,
+        player: PropTypes.object.isRequired,
+        isAuthenticated: PropTypes.bool
+    }
+
     componentDidMount() {
         this.props.getPlayers();
     }
@@ -29,6 +35,11 @@ class Roster extends Component {
 
     render() {
         const { players } = this.props.player;
+        if( this.props.isAuthenticated === false){
+            return(
+                <div>Log in Please!</div>
+            );
+        }
         return(
             <Container>
                 <div className="row offset-2">
@@ -89,13 +100,11 @@ class Roster extends Component {
     }
 }
 
-Roster.propTypes = {
-    getPlayers: PropTypes.func.isRequired,
-    player: PropTypes.object.isRequired
-}
+
 
 const mapStateToProps = (state) => ({
-    player: state.player
+    player: state.player,
+    isAuthenticated: state.isAuthenticated
 });
 
 export default connect(mapStateToProps, { getPlayers, deletePlayer })(Roster);

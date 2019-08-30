@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../../middleware/auth');
 
 const Player = require('../../models/Player');
 
@@ -11,13 +12,13 @@ router.get('/', (req, res) => {
         .catch(err => res.json(err));
 });
 
-router.post('/', (req, res) => {
+router.post('/', auth, (req, res) => {
     Player.create(req.body)
         .then(data => res.json(data))
         .catch(err => res.json(err))
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', auth, (req, res) => {
     Player.findByIdAndDelete({_id: req.params.id})
     .then(data => res.json(data))
     .catch(err => res.status(err))

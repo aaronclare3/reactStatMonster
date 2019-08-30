@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { addPlayer } from '../actions/playerActions';
+import PropTypes from 'prop-types';
 
 class PlayerModal extends Component {
     state = {
@@ -29,6 +30,10 @@ class PlayerModal extends Component {
         apiId:'',
         draftRound:'',
         draftPick:'',
+    }
+
+    static propTypes = {
+        isAuthenticated: PropTypes.bool
     }
 
     toggle = () => {
@@ -102,11 +107,12 @@ class PlayerModal extends Component {
     render() {
         return(
             <div>
-                <Button
+                {this.props.isAuthenticated ? <Button
                     color="dark"
                     style={{ marginBottom: '2rem' }}
                     onClick={this.toggle}
-                >Add Player</Button>
+                >Add Player</Button>: <h4 className="mb-3 ml-4">Please Login to Manage Your Roster</h4>}
+                
                 <Modal isOpen={this.state.modal} toggle = {this.toggle}>
                     <ModalHeader toggle={this.toggle}>Add to your Roster</ModalHeader>
                     <ModalBody>
@@ -126,7 +132,8 @@ class PlayerModal extends Component {
 }
 
 const mapStateToProps = state => ({
-    player: state.player
+    player: state.player,
+    isAuthenticated: state.auth.isAuthenticated
 })
 
 export default connect(mapStateToProps, {addPlayer})(PlayerModal);
