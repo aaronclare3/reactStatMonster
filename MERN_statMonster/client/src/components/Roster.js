@@ -6,11 +6,21 @@ import { getPlayers, deletePlayer } from '../actions/playerActions';
 import PropTypes from 'prop-types';
 import PlayerJumbo from './PlayerJumbo';
 import { Link } from 'react-router-dom'; 
+import axios from 'axios';
 
 
 class Roster extends Component {
     state = {
-        id: null
+        id: null,
+        week1: '',
+        week2: '',
+        week3: '',
+        week4: '',
+        week5: '',
+        week6: '',
+        week7: '',
+        week8: '',
+        week9: ''
     }
     onSelectHandler = (id) =>{
         this.setState({
@@ -25,6 +35,36 @@ class Roster extends Component {
 
     onDeleteClick = (id) => {
         this.props.deletePlayer(id);
+    }
+
+    printYards = (arr, p) => {
+        for(var i = 1; i < arr.length + 1; i++){
+            if(p == "RB"){
+                console.log(`Week ${i}` + " " + arr[i].stats.rushing.rushYards);
+            }
+            if(p == "WR" || p == "TE"){
+                console.log(`Week ${i}` + " " + arr[i].stats.receiving.recYards);
+            }
+            if(p == "QB"){
+                console.log(`Week ${i}` + " " + arr[i].stats.passing.passYards);
+            }
+        }
+    }
+
+    statTable = (f, l, p) => {
+        console.log(f, l);
+        axios({
+            method: 'get',
+            url: `https://api.mysportsfeeds.com/v2.1/pull/nfl/2018-regular/player_gamelogs.json?player=${f}-${l}`,
+            params: {"fordate": "20180909"},
+            headers: {"Authorization": "Basic " + btoa("bb751682-fb89-4b9a-a62c-240b68" + ':' + "MYSPORTSFEEDS")}
+        })
+        .then(res => {
+            this.state.week1 = res.data.gamelogs
+            console.log(this.state.week1);
+            this.printYards(this.state.week1, p);
+        })
+        .catch(err => {console.log(err)});
     }
 
     render() {
@@ -55,7 +95,7 @@ class Roster extends Component {
                                                                 <span className="float-right"># { jerseyNumber }</span></h4>
                                                             </div>
                                                                 <div className="col-6 p_info p_info_l">
-                                                                    Info: <br/>
+                                                                    Personal Info: <br/>
                                                                     <i className="fas fa-birthday-cake mr-1" style={{color:'grey'}}/> { age } <br/>
                                                                     <i className="fas fa-ruler-vertical mr-1" style={{color:'grey'}}/>  { height } <br/>
                                                                     <i className="fas fa-weight mr-1" style={{color:'grey'}}/>  { weight } <br/>
@@ -68,7 +108,7 @@ class Roster extends Component {
                                                                     <i className="fas fa-list-ol mr-1" style={{color:'grey'}}/> { draftPick } <br/>
                                                                     <i className="fas fa-heartbeat mr-1" style={{color:'grey'}}/> { injury } 
                                                                 </div>
-                                                            <a className="rotate-btn">Rotate</a>
+                                                            <Button onClick={this.statTable.bind(this, firstName, lastName, primaryPosition)}>See More Stats</Button>
                                                         </div>
                                                     </div>
                                                 </CardBody>
@@ -82,7 +122,6 @@ class Roster extends Component {
                             ))}
                         </TransitionGroup>
                     </ListGroup>
-                    {/* <PlayerJumbo className="playerJumbo" id={this.state.id}/> */}
                 </div>
             </Container>
         );
