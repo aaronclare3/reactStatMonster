@@ -13,14 +13,9 @@ class Roster extends Component {
     state = {
         id: null,
         week1: '',
-        week2: '',
-        week3: '',
-        week4: '',
-        week5: '',
-        week6: '',
-        week7: '',
-        week8: '',
-        week9: ''
+        yards: '',
+        TD: '',
+        statistics : []
     }
     onSelectHandler = (id) =>{
         this.setState({
@@ -38,18 +33,35 @@ class Roster extends Component {
     }
 
     printYards = (arr, p) => {
-        for(var i = 1; i < arr.length + 1; i++){
-            if(p == "RB"){
-                console.log(`Week ${i}` + " " + arr[i].stats.rushing.rushYards);
+        
+        for(var i = 0; i < arr.length; i++){
+            if(p === "RB"){
+                this.state.statistics.push("Week " + arr[i].game.week + " Rushing Yards " + arr[i].stats.rushing.rushYards + " TD's " + arr[i].stats.rushing.rushTD);
+                console.log("Week " + arr[i].game.week + " Rushing Yards " + arr[i].stats.rushing.rushYards + " TD's " + arr[i].stats.rushing.rushTD);
             }
-            if(p == "WR" || p == "TE"){
-                console.log(`Week ${i}` + " " + arr[i].stats.receiving.recYards);
+            if(p === "WR" || p == "TE"){
+                this.state.statistics.push("Week " + arr[i].game.week + " Receiving Yards " + arr[i].stats.receiving.recYards + " TD's " + arr[i].stats.receiving.recTD);
+                console.log("Week " + arr[i].game.week + " Receiving Yards " + arr[i].stats.receiving.recYards + " TD's " + arr[i].stats.receiving.recTD);
             }
-            if(p == "QB"){
-                console.log(`Week ${i}` + " " + arr[i].stats.passing.passYards);
+            if(p === "QB"){
+                this.state.statistics.push({"Stats": "Week " + arr[i].game.week + " Passing Yards " + arr[i].stats.passing.passYards + " TD's " + arr[i].stats.passing.passTD + " INT's " + arr[i].stats.passing.passInt});
+                console.log("Week " + arr[i].game.week + " Passing Yards " + arr[i].stats.passing.passYards + " TD's " + arr[i].stats.passing.passTD + " INT's " + arr[i].stats.passing.passInt);
             }
         }
     }
+    // printTDs = (arr, p) => {
+    //     for(var i = 1; i < arr.length + 1; i++){
+    //         if(p === "RB"){
+    //             console.log("Week " + arr[i].game.week + " TD's " + arr[i].stats.rushing.rushTD);
+    //         }
+    //         if(p === "WR" || p === "TE"){
+    //             console.log(`Week ${i}` + " TD's " + arr[i].stats.receiving.recTD);
+    //         }
+    //         if(p === "QB"){
+    //             console.log(`Week ${i}` + " TD's " + arr[i].stats.passing.passTD);
+    //         }
+    //     }
+    // }
 
     statTable = (f, l, p) => {
         console.log(f, l);
@@ -60,9 +72,12 @@ class Roster extends Component {
             headers: {"Authorization": "Basic " + btoa("bb751682-fb89-4b9a-a62c-240b68" + ':' + "MYSPORTSFEEDS")}
         })
         .then(res => {
-            this.state.week1 = res.data.gamelogs
-            console.log(this.state.week1);
-            this.printYards(this.state.week1, p);
+            this.state.yards = res.data.gamelogs
+            // this.state.TD = res.data.gamelogs
+            console.log(this.state.yards);
+            // console.log(this.state.TD);
+            this.printYards(this.state.yards, p);
+            // this.printTDs(this.state.TD, p);
         })
         .catch(err => {console.log(err)});
     }
@@ -114,7 +129,12 @@ class Roster extends Component {
                                                 </CardBody>
                                             </div>
                                             <div className="face back">
-
+                                                <ul>
+                                                    {this.state.statistics.map((player) => (
+                                                        <li>{player}</li>
+                                                    ))}
+                                                    <li>Hello</li>
+                                                </ul>
                                             </div>
                                         </Card>
                                     </ListGroupItem>
