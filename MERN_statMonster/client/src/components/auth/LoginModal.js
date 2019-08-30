@@ -88,7 +88,7 @@ class LoginModal extends Component {
                     <Form onSubmit={this.onSubmit}>
                         <FormGroup>
                             
-                            <label for="email">Email: </label>
+                            <label htmlFor="email">Email: </label>
                             <input type="email" 
                             name="email" 
                             id="email" 
@@ -96,7 +96,7 @@ class LoginModal extends Component {
                             className='mb-3'
                             onChange={this.onChange}/>
 
-                            <label for="password">Password: </label>
+                            <label htmlFor="password">Password: </label>
                             <input type="password" 
                             name="password" 
                             id="password" 

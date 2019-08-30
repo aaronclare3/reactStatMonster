@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux';
 import { addPlayer } from '../actions/playerActions';
 import PropTypes from 'prop-types';
+import Spinner from './layout/Spinner'
 
 class PlayerModal extends Component {
     state = {
@@ -30,6 +31,7 @@ class PlayerModal extends Component {
         apiId:'',
         draftRound:'',
         draftPick:'',
+        spinner: ''
     }
 
     static propTypes = {
@@ -45,7 +47,11 @@ class PlayerModal extends Component {
     onChange = (e) => {
         this.setState({ [ e.target.name ]: e.target.value });
     }
-
+    setSpinner = (e) => {
+        this.state.spinner = true;
+        this.onSubmit(e)
+    }
+    
     onSubmit = (e) => {
         e.preventDefault();
         axios({
@@ -100,11 +106,15 @@ class PlayerModal extends Component {
             }
             this.props.addPlayer(newPlayer);
             this.toggle();
+            this.state.spinner = '';
         })
         .catch(err => console.log(err))
     }
 
     render() {
+        if(this.state.spinner === true){
+            return <Spinner/>
+        }else{
         return(
             <div>
                 {this.props.isAuthenticated ? <Button
@@ -116,7 +126,7 @@ class PlayerModal extends Component {
                 <Modal isOpen={this.state.modal} toggle = {this.toggle}>
                     <ModalHeader toggle={this.toggle}>Add to your Roster</ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.onSubmit}>
+                        <Form onSubmit={this.setSpinner}>
                             <FormGroup>
                                 <Label for="player">Player</Label>
                                 <Input type="text" className="mb-3" name="firstname" id="player" placeholder="Player First Name" onChange={this.onChange}></Input>
@@ -128,6 +138,7 @@ class PlayerModal extends Component {
                 </Modal>
             </div>
         );    
+        }
     }
 }
 

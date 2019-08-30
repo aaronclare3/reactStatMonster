@@ -34,12 +34,13 @@ class Roster extends Component {
     }
 
     render() {
-        const { players } = this.props.player;
+        console.log(this.props.isAuthenticated)
         if( this.props.isAuthenticated === false){
             return(
                 <div>Log in Please!</div>
-            );
-        }
+                );
+        }else{
+        const { players } = this.props.player;
         return(
             <Container>
                 <div className="row offset-2">
@@ -93,10 +94,10 @@ class Roster extends Component {
                             ))}
                         </TransitionGroup>
                     </ListGroup>
-                    {/* <PlayerJumbo className="playerJumbo" id={this.state.id}/> */}
                 </div>
             </Container>
         );
+        }
     }
 }
 

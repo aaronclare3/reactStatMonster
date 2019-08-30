@@ -91,7 +91,7 @@ class RegisterModal extends Component {
                     { this.state.msg? <Alert color="danger">{ this.state.msg } </Alert> :null}
                     <Form onSubmit={this.onSubmit}>
                         <FormGroup>
-                            <label for="firstName">First Name: </label>
+                            <label htmlFor="firstName">First Name: </label>
                             <input type="text" 
                             name="firstName" 
                             id="firstName" 
@@ -99,7 +99,7 @@ class RegisterModal extends Component {
                             className="mb-3" 
                             onChange={this.onChange}/>
 
-                            <label for="lastName">Last Name: </label>
+                            <label htmlFor="lastName">Last Name: </label>
                             <input type="text" 
                             name="lastName" 
                             id="lastName" 
@@ -107,7 +107,7 @@ class RegisterModal extends Component {
                             className="mb-3"
                             onChange={this.onChange}/>
                             
-                            <label for="email">Email: </label>
+                            <label htmlFor="email">Email: </label>
                             <input type="email" 
                             name="email" 
                             id="email" 
@@ -115,7 +115,7 @@ class RegisterModal extends Component {
                             className="mb-3"
                             onChange={this.onChange}/>
 
-                            <label for="password">Password: </label>
+                            <label htmlFor="password">Password: </label>
                             <input type="password" 
                             name="password" 
                             id="password" 
