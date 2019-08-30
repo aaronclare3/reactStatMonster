@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb://localhost/statMonster",
+    "jwtsecret": "sm_myJwtSecret"
+}

@@ -8,6 +8,11 @@ import { Link } from 'react-router-dom';
 
 
 class Roster extends Component {
+    static propTypes = {
+        getPlayers: PropTypes.func.isRequired,
+        player: PropTypes.object.isRequired,
+        isAuthenticated: PropTypes.bool
+    }
 
     componentDidMount() {
         this.props.getPlayers();
@@ -28,11 +33,14 @@ class Roster extends Component {
                                     <ListGroupItem>
                                         <Card className="text-center" style={{width: '18rem'}}>
                                             <CardHeader className="titlebar"><h3 className="PlayerName">{firstName} {lastName}</h3>
-                                            <Button 
+                                            {this.props.isAuthenticated ? <Button 
                                             className="remove-btn remove" 
                                             color="danger" 
                                             size="sm" 
-                                            onClick={this.onDeleteClick.bind(this, _id)}>&times;</Button>
+                                            onClick={this.onDeleteClick.bind(this, _id)}>&times;</Button>: 
+                                            null
+                                            }
+                                            
                                             </CardHeader>
                                             <CardImg src={img} alt=""/>
                                             <CardBody>
@@ -59,13 +67,11 @@ class Roster extends Component {
     }
 }
 
-Roster.propTypes = {
-    getPlayers: PropTypes.func.isRequired,
-    player: PropTypes.object.isRequired
-}
+
 
 const mapStateToProps = (state) => ({
-    player: state.player
+    player: state.player,
+    isAuthenticated: state.isAuthenticated
 });
 
 export default connect(mapStateToProps, { getPlayers, deletePlayer })(Roster);
